@@ -18,7 +18,7 @@
   <div class="timelineItem" id="timelineItem-<%= p.id %>">
     <div class="timelineSidebar">
       <%= timeline_user_avater(p.user) %>
-      <% if current_user %>
+      <% if current_user == p.user %>
       <%= link_to "Ajax Delete", photo_path(p), :method => :delete, :remote => true, :data => { :confirm => "Are you sure?"}, :class => "btn btn-danger btn-xs pull-right" %>
       <% end %>
     </div>
@@ -30,7 +30,19 @@
       <div class="timelineContent"><%= simple_format p.content %></div>
       <div class="timelineTag">這裏放tag</div>
       <div class="timelineLikes">這裏按讚</div>
-      <div class="timelineComments">這裏留言：：：：</div>
+      <% p.comments.each do |c| %>
+      <div class="timelineComments">
+        <div class="media">
+          <div class="media-left">
+            <%= link_to (image_tag c.user.image, :class => "media-object img-rounded"), user_path(c.user) %>
+          </div>
+          <div class="media-body">
+            <%= link_to c.user.name, user_path(c.user) %>
+            <%= simple_format c.content %>
+          </div>
+        </div>
+      </div>
+      <% end %>
     </div>
   </div>
   <% end %>
