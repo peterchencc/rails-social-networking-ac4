@@ -1,0 +1,9 @@
+<div class="row">
+  <% @photos.each do |p| %>
+  <div class="col-xs-6 col-md-3">
+
+      <%= link_to image_tag(  p.avatar(:medium) , :class => "img-rounded"), photo_path(p), :class => "thumbnail"%>
+
+  </div>
+  <% end %>
+</div>
