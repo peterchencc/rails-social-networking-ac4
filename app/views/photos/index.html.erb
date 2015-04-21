@@ -15,16 +15,18 @@
 
 <div class="timelineContainer">
   <% @photos.each do |p| %>
-  <div class="timelineItem">
+  <div class="timelineItem" id="timelineItem-<%= p.id %>">
     <div class="timelineSidebar">
       <%= timeline_user_avater(p.user) %>
+      <%= link_to "Ajax Delete", photo_path(p), :method => :delete, :remote => true, :data => { :confirm => "Are you sure?"}, :class => "btn btn-danger btn-xs pull-right" %>
     </div>
     <div class="timelineCenter">
       <div class="mediaPhoto">
-        <%= image_tag p.avatar , :class => "img-thumbnail img_responsive"  %>
+        <%= link_to (image_tag p.avatar , :class => "img-thumbnail img_responsive"), photo_path(p)  %>
       </div>
 
-      <div class="timelineContent"><%= p.content %></div>
+      <div class="timelineContent"><%= simple_format p.content %></div>
+      <div class="timelineTag">這裏放tag</div>
       <div class="timelineLikes">這裏按讚</div>
       <div class="timelineComments">這裏留言：：：：</div>
     </div>

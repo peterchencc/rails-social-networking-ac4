@@ -1,0 +1,19 @@
+<div class="timelineContainer">
+
+  <div class="timelineItem" id="timelineItem-<%= @photo.id %>">
+    <div class="timelineSidebar">
+      <%= timeline_user_avater(@photo.user) %>
+      <%= link_to "Ajax Delete", photo_path(@photo), :method => :delete, :remote => true, :data => { :confirm => "Are you sure?"}, :class => "btn btn-danger btn-xs pull-right" %>
+    </div>
+    <div class="timelineCenter">
+      <div class="mediaPhoto">
+        <%= image_tag @photo.avatar , :class => "img-thumbnail img_responsive"  %>
+      </div>
+
+      <div class="timelineContent"><%= simple_format @photo.content %></div>
+      <div class="timelineLikes">這裏按讚</div>
+      <div class="timelineComments">這裏留言：：：：</div>
+    </div>
+  </div>
+
+</div>

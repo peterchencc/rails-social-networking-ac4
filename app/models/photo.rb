@@ -7,4 +7,8 @@ class Photo < ActiveRecord::Base
 
   belongs_to :user
 
+
+  def can_delete_by?(u)
+    self.user == u
+  end
 end
