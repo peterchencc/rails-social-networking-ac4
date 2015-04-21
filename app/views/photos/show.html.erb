@@ -13,16 +13,17 @@
       </div>
 
       <div class="timelineContent"><%= simple_format @photo.content %></div>
+      <div class="timelineTag">這裏放tag</div>
       <div class="timelineLikes">這裏按讚</div>
 
       <% @photo.comments.each do |c| %>
         <div class="timelineComments">
           <div class="media">
             <div class="media-left">
-              <%= link_to (image_tag c.user.image, :class => "media-object img-rounded"), user_path(c.user) %>
+              <%= link_to (image_tag c.user.user_display_image, :class => "media-object img-rounded"), user_path(c.user) %>
             </div>
             <div class="media-body">
-              <%= link_to c.user.name, user_path(c.user) %>
+              <%= link_to c.user.user_display_name, user_path(c.user) %>
               <%= simple_format c.content %>
             </div>
           </div>

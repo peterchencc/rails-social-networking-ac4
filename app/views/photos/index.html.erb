@@ -31,18 +31,28 @@
       <div class="timelineTag">這裏放tag</div>
       <div class="timelineLikes">這裏按讚</div>
       <% p.comments.each do |c| %>
-      <div class="timelineComments">
+      <div class="timelineComments" id="timelineComments-<%= c.id %>">
         <div class="media">
           <div class="media-left">
-            <%= link_to (image_tag c.user.image, :class => "media-object img-rounded"), user_path(c.user) %>
+            <%= link_to (image_tag c.user.user_display_image, :class => "media-object img-rounded"), user_path(c.user) %>
           </div>
           <div class="media-body">
-            <%= link_to c.user.name, user_path(c.user) %>
+            <%= link_to c.user.user_display_name, user_path(c.user) %>
             <%= simple_format c.content %>
           </div>
         </div>
       </div>
       <% end %>
+      <div class="comment-form timelineComments">
+        <%= form_for @comment, :url => photo_comments_path(p) do |f| %>
+          <div class="form-group">
+            <%= f.text_area :content, :class => "form-control", :placeholder => "在這裡回覆...." %>
+          </div>
+            <%= f.submit "submit", :class =>"btn btn-primary pull-right"  %>
+        <% end %>
+        <div class="clearfix"></div>
+      </div>
+
     </div>
   </div>
   <% end %>

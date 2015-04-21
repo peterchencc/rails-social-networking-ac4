@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
 
     if @comment.save
 
-      redirect_to photo_path(@photo)
+      redirect_to photos_path
     else
       render :template => "photos/show"
     end

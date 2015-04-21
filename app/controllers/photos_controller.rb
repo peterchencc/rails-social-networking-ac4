@@ -5,6 +5,7 @@ class PhotosController < ApplicationController
   def index
     @photos = Photo.all.order("created_at DESC")
     @photo = Photo.new
+    @comment = Comment.new
   end
 
   def show

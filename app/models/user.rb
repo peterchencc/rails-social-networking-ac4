@@ -19,4 +19,13 @@ class User < ActiveRecord::Base
     end
   end
 
+
+  def user_display_name
+    name || self.email.split("@").first
+  end
+
+  def user_display_image
+    image || "http://fakeimg.pl/50x50/"
+  end
+
 end
