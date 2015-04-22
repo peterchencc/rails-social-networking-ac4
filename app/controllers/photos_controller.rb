@@ -22,6 +22,8 @@ class PhotosController < ApplicationController
       redirect_to photos_path
     else
       @photos = Photo.all.order("created_at DESC")
+      @photo = Photo.new
+      @comment = Comment.new
       render :action => :index
     end
   end

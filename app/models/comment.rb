@@ -4,4 +4,7 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :photo
 
+  def can_delete_by?(u)
+    self.user == u
+  end
 end
