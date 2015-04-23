@@ -11,14 +11,15 @@ class CommentsController < ApplicationController
 
     if @comment.save
 
-      # respond_to do |format|
+      respond_to do |format|
+        # format.html { redirect_to :back }
+        format.js{
 
-      #   format.js
-      # end
-
-      redirect_to photos_path
+           render :template => "comments/create"
+        }
+      end
     else
-      render :template => "photos/show"
+      redirect_to photos_path
     end
   end
 
