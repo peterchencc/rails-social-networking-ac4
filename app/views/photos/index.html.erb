@@ -26,23 +26,44 @@
       <div class="mediaPhoto">
         <%= link_to (image_tag p.avatar , :class => "img-thumbnail img_responsive"), photo_path(p)  %>
       </div>
+      <% if p.content %>  <%# 問這邊 要怎麼隱藏 %>
+        <div class="timelineContent"><%= simple_format p.content %></div>
+      <% end %>      <%# 問這邊 %>
 
-      <div class="timelineContent"><%= simple_format p.content %></div>
       <div class="timelineTag">這裏放tag</div>
-      <div class="timelineLikes">這裏按讚</div>
-      <% p.comments.each do |c| %>
-      <div class="timelineComments" id="timelineComments-<%= c.id %>">
-        <div class="media">
-          <div class="media-left">
-            <%= link_to (image_tag c.user.user_display_image, :class => "media-object img-rounded"), user_path(c.user) %>
-          </div>
-          <div class="media-body">
-            <%= link_to c.user.user_display_name, user_path(c.user) %>
-            <%= simple_format c.content %>
+
+      <div class="timelineLikes" id="timelineLikes-<%= p.id %>">
+        <% if Like.find_by_user_id_and_photo_id(current_user, p) %>
+          <%= link_to "讚", "photos/#{p.id}/like", :method => :post, :remote => true, :class => "btn btn-primary btn-xs glyphicon glyphicon-heart" %>
+        <% else %>
+          <%= link_to "讚", "photos/#{p.id}/like", :method => :post, :remote => true, :class => "btn btn-primary btn-xs glyphicon" %>
+        <% end %>
+        <% p.likes.each do |like| %>
+          <span><%= like.user.user_display_name %></span>
+        <% end %>
+          <span> 也按了讚！</span>
+      </div>
+      <div class="timelineComments-area">
+        <% p.comments.each do |c| %>
+        <div class="timelineComments" id="timelineComments-<%= c.id %>">
+          <div class="media">
+            <div class="media-left">
+              <%= link_to (image_tag c.user.user_display_image, :class => "media-object img-rounded"), user_path(c.user) %>
+            </div>
+            <div class="media-body">
+              <%= link_to c.user.user_display_name, user_path(c.user) %>
+
+              <% if c.can_delete_by?(current_user) %>
+              <%= link_to "x", photo_comment_path(p, c), :method => :delete, :remote => true, :data => { :confirm => "Are you sure?"}, :class => "btn btn-xs pull-right" %>
+              <% end %>
+
+              <%= simple_format c.content %>
+            </div>
           </div>
         </div>
+        <% end %>
       </div>
-      <% end %>
+
       <div class="comment-form timelineComments">
         <%= form_for @comment, :url => photo_comments_path(p) do |f| %>
           <div class="form-group">
@@ -57,3 +78,9 @@
   </div>
   <% end %>
 </div>
+
+<script>
+
+
+
+</script>

@@ -8,6 +8,10 @@ class Photo < ActiveRecord::Base
   belongs_to :user
   has_many :comments, :dependent => :destroy
 
+
+  has_many :likes
+  has_many :users, :through => :likes
+
   def can_delete_by?(u)
     self.user == u
   end

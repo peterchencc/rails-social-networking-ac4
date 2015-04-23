@@ -5,7 +5,10 @@ Rails.application.routes.draw do
 
   resources :photos do
     resources :comments
+
   end
+  post 'photos/:photo_id/like', to: 'likes#create'
+
 
 
   root 'photos#index'
