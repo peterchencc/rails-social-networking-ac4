@@ -15,7 +15,9 @@ class LikesController < ApplicationController
       @like.destroy
     end
 
+    @photo = Photo.find(params[:photo_id])
     respond_to do |format|
+      @photo.reload
       # format.html { redirect_to :back }
       format.js { render :action => "toggle_like_button" }
     end

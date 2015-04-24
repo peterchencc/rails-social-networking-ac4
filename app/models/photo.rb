@@ -10,7 +10,7 @@ class Photo < ActiveRecord::Base
 
 
   has_many :likes
-  has_many :users, :through => :likes
+  has_many :like_users, :through => :likes, :source => "user"
 
   def can_delete_by?(u)
     self.user == u

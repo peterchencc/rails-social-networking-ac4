@@ -32,15 +32,8 @@
       <div class="timelineTag">這裏放tag</div>
 
       <div class="timelineLikes" id="timelineLikes-<%= p.id %>">
-        <% if Like.find_by_user_id_and_photo_id(current_user, p) %>
-          <%= link_to "讚", "photos/#{p.id}/like", :method => :post, :remote => true, :class => "btn btn-primary btn-xs glyphicon glyphicon-heart" %>
-        <% else %>
-          <%= link_to "讚", "photos/#{p.id}/like", :method => :post, :remote => true, :class => "btn btn-primary btn-xs glyphicon" %>
-        <% end %>
-        <% p.likes.each do |like| %>
-          <span><%= like.user.user_display_name %></span>
-        <% end %>
-          <span> 也按了讚！</span>
+
+        <%= render :partial => "likes/show" , :locals => { :p => p } %>
       </div>
       <div class="timelineComments-area" id="timelineComments-area-<%= p.id %>">
         <% p.comments.each do |c| %>

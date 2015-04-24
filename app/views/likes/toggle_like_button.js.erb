@@ -1,2 +1,2 @@
 
-  $("#timelineLikes-<%= @like.photo_id %> a").toggleClass("glyphicon-heart");
+  $("#timelineLikes-<%= @like.photo_id %>").html("<%= j(render :partial => 'show', :locals => { :p => @photo } ) %>");
