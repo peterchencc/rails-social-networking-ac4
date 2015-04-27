@@ -5,10 +5,12 @@ Rails.application.routes.draw do
 
   resources :photos do
     resources :comments
-
+    resource :likes, :only => [:create]
   end
-  post 'photos/:photo_id/like', to: 'likes#create'
 
+  #post 'photos/:photo_id/like' => 'likes#create'
+
+  get 'tag/:id' => 'photos#tagged_photos', :as => "tag"
 
 
   root 'photos#index'
