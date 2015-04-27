@@ -20,10 +20,10 @@
         <div class="timelineComments">
           <div class="media">
             <div class="media-left">
-              <%= link_to (image_tag c.user.user_display_image, :class => "media-object img-rounded"), user_path(c.user) %>
+              <%= link_to (image_tag c.user_display_image, :class => "media-object img-rounded"), user_path(c.user) %>
             </div>
             <div class="media-body">
-              <%= link_to c.user.user_display_name, user_path(c.user) %>
+              <%= link_to c.user_display_name, user_path(c.user) %>
               <%= simple_format c.content %>
             </div>
           </div>

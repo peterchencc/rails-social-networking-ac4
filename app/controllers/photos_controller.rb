@@ -41,9 +41,20 @@ class PhotosController < ApplicationController
     end
   end
 
+  def tagged_photos
+    @tag = Tag.find_by_name(params[:id])
+    @photos = @tag.photos
+    respond_to do |format|
+      format.js{
+        render :template => "photos/show_tagged_photos"
+      }
+    end
+
+  end
+
   protected
 
   def photo_params
-    params.require(:photo).permit( :content, :avatar )
+    params.require(:photo).permit( :content, :avatar, :tag_list )
   end
 end

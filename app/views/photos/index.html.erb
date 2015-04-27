@@ -5,6 +5,10 @@
     <%= form.text_area :content, :class => "form-control", :placeholder => "#‎我的觀察啦‬....不想寫content也可" %>
   </div>
   <div class="form-group">
+    <%= form.label :tag_list, "標籤" %>
+    <%= form.text_field :tag_list, :placeholder => "tag1, tag2", :class=> "form-control" %>
+  </div>
+  <div class="form-group">
     <%= form.file_field :avatar %>
   </div>
 
@@ -29,7 +33,11 @@
         <div class="timelineContent"><%= simple_format p.content %></div>
       <% end %>      <%# 問這邊 %>
 
-      <div class="timelineTag">這裏放tag</div>
+      <div class="timelineTag">
+        <% p.tags.each do |tag| %>
+          <%= link_to tag.name, tag_path(tag), :remote => true, :data => { :toggle => "modal", :target => "#tagged_photos" } %>
+        <% end %>
+      </div>
 
       <div class="timelineLikes" id="timelineLikes-<%= p.id %>">
 
@@ -69,6 +77,15 @@
     </div>
   </div>
   <% end %>
+</div>
+
+
+<div class="modal fade" id="tagged_photos" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+
+    </div>
+  </div>
 </div>
 
 <script>
