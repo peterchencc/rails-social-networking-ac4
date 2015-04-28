@@ -1,9 +1,15 @@
-        <% if Like.find_by_user_id_and_photo_id(current_user, p) %>
-          <%= link_to "收回讚", photo_likes_path(p), :method => :post, :remote => true, :class => "btn btn-primary btn-xs glyphicon glyphicon-heart" %>
-        <% else %>
-          <%= link_to "讚", photo_likes_path(p), :method => :post, :remote => true, :class => "btn btn-primary btn-xs glyphicon" %>
-        <% end %>
-        <% p.like_users.each do |u| %>
-          <span><%= link_to u.user_display_name, user_path(u) %></span>
-        <% end %>
-          <span> 也按了讚！</span>
+<% if Like.find_by_user_id_and_photo_id(current_user, p) %>
+  <%= link_to "收回讚", photo_likes_path(p), :method => :post, :remote => true, :class => "btn btn-primary btn-xs glyphicon glyphicon-heart" %>
+<% else %>
+  <%= link_to "讚", photo_likes_path(p), :method => :post, :remote => true, :class => "btn btn-primary btn-xs glyphicon" %>
+<% end %>
+
+<% p.like_users.each do |u| %>
+  <span><%= link_to u.user_display_name, user_path(u) %></span>
+<% end %>
+
+<% if p.like_users.any? %>
+  <span> 也按了讚！</span>
+<% else %>
+  <span> Q_Q </span>
+<% end %>

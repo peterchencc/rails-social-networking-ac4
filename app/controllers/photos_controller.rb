@@ -3,9 +3,7 @@ class PhotosController < ApplicationController
   before_action :authenticate_user!, :only => [ :create, :update, :destroy]
 
   def index
-    @photos = Photo.all.order("created_at DESC")
-    @photo = Photo.new
-    @comment = Comment.new
+    load_photos
   end
 
   def show
@@ -14,16 +12,15 @@ class PhotosController < ApplicationController
   end
 
   def create
-
     @photo = Photo.new(photo_params)
     @photo.user = current_user
+
     if @photo.save
       flash[:notice] = "新增成功"
       redirect_to photos_path
     else
-      @photos = Photo.all.order("created_at DESC")
-      @photo = Photo.new
-      @comment = Comment.new
+      load_photos
+
       render :action => :index
     end
   end
@@ -34,25 +31,20 @@ class PhotosController < ApplicationController
     if @photo.can_delete_by?(current_user)
       @photo.destroy
     end
-
-    respond_to do |format|
-      # format.html { redirect_to :back }
-      format.js
-    end
   end
 
   def tagged_photos
     @tag = Tag.find_by_name(params[:id])
     @photos = @tag.photos
-    respond_to do |format|
-      format.js{
-        render :template => "photos/show_tagged_photos"
-      }
-    end
-
   end
 
   protected
+
+  def load_photos
+    @photos = Photo.all.order("created_at DESC")
+    @photo = Photo.new
+    @comment = Comment.new
+  end
 
   def photo_params
     params.require(:photo).permit( :content, :avatar, :tag_list )

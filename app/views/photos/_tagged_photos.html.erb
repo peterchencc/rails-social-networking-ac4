@@ -1,5 +1,5 @@
 ＃以下都是有標注<%= tag.name %>的照片
 <p></p>
-<% p.each do |p| %>
+<% photos.each do |p| %>
   <%= link_to (image_tag p.avatar.url(:medium) ,  :class => "img-thumbnail img_responsive"), photo_path(p)  %>
 <% end %>

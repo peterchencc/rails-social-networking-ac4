@@ -2,39 +2,20 @@ class CommentsController < ApplicationController
 
   before_action :authenticate_user!, :only => [ :create, :update, :destroy]
 
-
   def create
-
     @photo = Photo.find(params[:photo_id])
     @comment = @photo.comments.build(comment_params)
     @comment.user = current_user
 
-    if @comment.save
-
-      respond_to do |format|
-        # format.html { redirect_to :back }
-        format.js{
-
-           render :template => "comments/create"
-        }
-      end
-    else
-      redirect_to photos_path
-    end
+    @comment.save
   end
 
   def destroy
-
     @photo = Photo.find(params[:photo_id])
     @comment = @photo.comments.find( params[:id] )
 
     if @comment.can_delete_by?(current_user)
       @comment.destroy
-    end
-
-    respond_to do |format|
-
-      format.js
     end
   end
 

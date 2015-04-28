@@ -14,6 +14,8 @@ class Like < ActiveRecord::Base
       like.user = user
       like.save
     end
+
+    like
   end
 
 end

@@ -17,79 +17,13 @@
 </div>
 
 <div class="timelineContainer">
-  <% @photos.each do |p| %>
-  <div class="timelineItem" id="timelineItem-<%= p.id %>">
-    <div class="timelineSidebar">
-      <%= timeline_user_avater(p.user) %>
-      <% if current_user == p.user %>
-      <%= link_to "Ajax Delete", photo_path(p), :method => :delete, :remote => true, :data => { :confirm => "Are you sure?"}, :class => "btn btn-danger btn-xs pull-right" %>
-      <% end %>
-    </div>
-    <div class="timelineCenter">
-      <div class="mediaPhoto">
-        <%= link_to (image_tag p.avatar , :class => "img-thumbnail img_responsive"), photo_path(p)  %>
-      </div>
-      <% if p.content %>  <%# 問這邊 要怎麼隱藏 %>
-        <div class="timelineContent"><%= simple_format p.content %></div>
-      <% end %>      <%# 問這邊 %>
-
-      <div class="timelineTag">
-        <% p.tags.each do |tag| %>
-          <%= link_to tag.name, tag_path(tag), :remote => true, :data => { :toggle => "modal", :target => "#tagged_photos" } %>
-        <% end %>
-      </div>
-
-      <div class="timelineLikes" id="timelineLikes-<%= p.id %>">
-
-        <%= render :partial => "likes/show" , :locals => { :p => p } %>
-      </div>
-      <div class="timelineComments-area" id="timelineComments-area-<%= p.id %>">
-        <% p.comments.each do |c| %>
-        <div class="timelineComments" id="timelineComments-<%= c.id %>">
-          <div class="media">
-            <div class="media-left">
-              <%= link_to (image_tag c.user.user_display_image, :class => "media-object img-rounded"), user_path(c.user) %>
-            </div>
-            <div class="media-body">
-              <%= link_to c.user.user_display_name, user_path(c.user) %>
-
-              <% if c.can_delete_by?(current_user) %>
-              <%= link_to "x", photo_comment_path(p, c), :method => :delete, :remote => true, :data => { :confirm => "Are you sure?"}, :class => "btn btn-xs pull-right" %>
-              <% end %>
-
-              <%= simple_format c.content %>
-            </div>
-          </div>
-        </div>
-        <% end %>
-      </div>
-
-      <div class="comment-form timelineComments">
-        <%= form_for @comment, :remote => true, :url => photo_comments_path(p) do |f| %>
-          <div class="form-group">
-            <%= f.text_area :content, :class => "form-control", :placeholder => "在這裡回覆...." %>
-          </div>
-            <%= f.submit "submit", :class =>"btn btn-primary pull-right"  %>
-        <% end %>
-        <div class="clearfix"></div>
-      </div>
-
-    </div>
-  </div>
-  <% end %>
+  <%= render :partial => "photo", :collection => @photos, :as => :p %>
 </div>
 
 
 <div class="modal fade" id="tagged_photos" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
-
     </div>
   </div>
 </div>
-
-<script>
-
-
-
-</script>
